@@ -1,0 +1,52 @@
+{
+  "games": [
+    {
+      "id": 1,
+      "title": "Snake Adventure",
+      "description": "Clássico jogo da cobrinha com gráficos modernos e desafios emocionantes!",
+      "thumbnail": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=300&fit=crop",
+      "gameUrl": "https://seu-usuario.github.io/snake/",
+      "category": "Ação"
+    },
+    {
+      "id": 2,
+      "title": "Puzzle Master",
+      "description": "Resolva quebra-cabeças desafiadores e exercite seu cérebro!",
+      "thumbnail": "https://images.unsplash.com/photo-1611996575749-79a3a250f948?w=400&h=300&fit=crop",
+      "gameUrl": "https://seu-usuario.github.io/puzzle/",
+      "category": "Puzzle"
+    },
+    {
+      "id": 3,
+      "title": "Space Shooter",
+      "description": "Destrua naves inimigas e salve a galáxia nesta aventura espacial!",
+      "thumbnail": "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400&h=300&fit=crop",
+      "gameUrl": "https://seu-usuario.github.io/space/",
+      "category": "Ação"
+    },
+    {
+      "id": 4,
+      "title": "Mystery Island",
+      "description": "Explore uma ilha misteriosa cheia de segredos e tesouros escondidos!",
+      "thumbnail": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop",
+      "gameUrl": "https://seu-usuario.github.io/island/",
+      "category": "Aventura"
+    },
+    {
+      "id": 5,
+      "title": "Racing Madness",
+      "description": "Corridas alucinantes com carros super velozes e pistas desafiadoras!",
+      "thumbnail": "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=400&h=300&fit=crop",
+      "gameUrl": "https://seu-usuario.github.io/racing/",
+      "category": "Corrida"
+    },
+    {
+      "id": 6,
+      "title": "Tower Defense",
+      "description": "Construa torres estratégicas e defenda sua base contra invasores!",
+      "thumbnail": "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=300&fit=crop",
+      "gameUrl": "https://seu-usuario.github.io/tower/",
+      "category": "Estratégia"
+    }
+  ]
+}
