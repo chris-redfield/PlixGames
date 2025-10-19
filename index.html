@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlixGames</title>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>PlixGames - Hub de Jogos</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <style>
         /* Reset e configurações globais */
         * {
@@ -78,6 +78,7 @@
         }
 
         .logo-icon {
+            font-size: 48px;
             color: var(--accent);
             filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.5));
             animation: rotate 20s linear infinite;
@@ -143,6 +144,7 @@
             transform: translateY(-50%);
             color: var(--text-secondary);
             pointer-events: none;
+            font-size: 20px;
         }
 
         /* Grid de jogos */
@@ -196,14 +198,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
             position: relative;
             overflow: hidden;
         }
 
         .game-image i {
-            color: white;
             font-size: 64px;
+            color: white;
             filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));
         }
 
@@ -312,8 +313,7 @@
         }
 
         .footer-links a i {
-            width: 18px;
-            height: 18px;
+            font-size: 18px;
         }
 
         .footer-text {
@@ -321,9 +321,8 @@
             font-size: 0.9rem;
         }
 
-        .footer-text .heart {
+        .footer-text i {
             color: #ef4444;
-            display: inline-block;
             animation: heartbeat 1.5s ease-in-out infinite;
         }
 
@@ -381,6 +380,10 @@
                 flex-direction: column;
                 gap: 10px;
             }
+
+            .logo-icon {
+                font-size: 36px;
+            }
         }
 
         /* Mensagem quando não há jogos */
@@ -393,9 +396,28 @@
 
         .no-games i {
             display: block;
+            font-size: 64px;
             margin: 0 auto 20px;
             color: var(--accent);
             opacity: 0.5;
+        }
+
+        /* Loading spinner */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading i {
+            font-size: 48px;
+            color: var(--accent);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -404,7 +426,7 @@
     <header>
         <div class="container">
             <div class="logo-container">
-                <i data-lucide="gamepad-2" class="logo-icon" width="48" height="48"></i>
+                <i class="fas fa-gamepad logo-icon"></i>
                 <h1>PlixGames</h1>
             </div>
             <p class="description">Aqui estão todos os meus jogos em um só lugar. Explore e divirta-se!</p>
@@ -422,7 +444,7 @@
                 placeholder="Pesquisar jogos..."
                 aria-label="Pesquisar jogos"
             >
-            <i data-lucide="search" class="search-icon" width="20" height="20"></i>
+            <i class="fas fa-search search-icon"></i>
         </div>
 
         <!-- Grid de jogos -->
@@ -437,37 +459,37 @@
             
             <div class="game-card" data-name="nome do jogo">
                 <div class="game-image">
-                    <i data-lucide="nome-do-icone" width="64" height="64"></i>
+                    <i class="fas fa-nome-do-icone"></i>
                 </div>
                 <div class="game-info">
                     <h2 class="game-title">Nome do Jogo</h2>
                     <a href="URL_DO_JOGO" target="_blank" class="play-button">
                         Jogar Agora
-                        <i data-lucide="arrow-right" width="18" height="18"></i>
+                        <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
             
             Substitua:
             - "nome do jogo" no data-name (usado para pesquisa)
-            - "nome-do-icone" pelo nome do ícone Lucide desejado
+            - fa-nome-do-icone pelo ícone Font Awesome desejado
             - "Nome do Jogo" pelo título do jogo
             - "URL_DO_JOGO" pelo link do jogo
             
-            Ícones disponíveis em: https://lucide.dev/icons
+            Ícones disponíveis em: https://fontawesome.com/icons
             ========================================
             -->
 
             <!-- Maze Explorer 2 -->
             <div class="game-card" data-name="maze explorer 2">
                 <div class="game-image">
-                    <i data-lucide="map" width="64" height="64"></i>
+                    <i class="fas fa-map-marked-alt"></i>
                 </div>
                 <div class="game-info">
                     <h2 class="game-title">Maze Explorer 2</h2>
                     <a href="https://chris-redfield.github.io/maze-explorer2/" target="_blank" class="play-button">
                         Jogar Agora
-                        <i data-lucide="arrow-right" width="18" height="18"></i>
+                        <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
@@ -475,13 +497,13 @@
             <!-- Maze Explorer 3 -->
             <div class="game-card" data-name="maze explorer 3">
                 <div class="game-image">
-                    <i data-lucide="compass" width="64" height="64"></i>
+                    <i class="fas fa-compass"></i>
                 </div>
                 <div class="game-info">
                     <h2 class="game-title">Maze Explorer 3</h2>
                     <a href="https://chris-redfield.github.io/maze-explorer3" target="_blank" class="play-button">
                         Jogar Agora
-                        <i data-lucide="arrow-right" width="18" height="18"></i>
+                        <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
@@ -489,21 +511,27 @@
             <!-- Bang Bang -->
             <div class="game-card" data-name="bang bang">
                 <div class="game-image">
-                    <i data-lucide="crosshair" width="64" height="64"></i>
+                    <i class="fas fa-crosshairs"></i>
                 </div>
                 <div class="game-info">
                     <h2 class="game-title">Bang Bang</h2>
                     <a href="https://chris-redfield.github.io/bang-bang/" target="_blank" class="play-button">
                         Jogar Agora
-                        <i data-lucide="arrow-right" width="18" height="18"></i>
+                        <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
         </div>
 
+        <!-- Loading -->
+        <div class="loading" id="loadingSpinner">
+            <i class="fas fa-spinner"></i>
+            <p>Carregando jogos...</p>
+        </div>
+
         <!-- Mensagem quando não há jogos encontrados -->
         <div class="no-games" id="noGamesMessage" style="display: none;">
-            <i data-lucide="search-x" width="64" height="64"></i>
+            <i class="fas fa-search-minus"></i>
             Nenhum jogo encontrado. Tente outro termo de pesquisa.
         </div>
     </div>
@@ -513,30 +541,29 @@
         <div class="container">
             <div class="footer-links">
                 <a href="https://github.com/chris-redfield" target="_blank">
-                    <i data-lucide="github" width="18" height="18"></i>
+                    <i class="fab fa-github"></i>
                     GitHub
                 </a>
                 <a href="mailto:seu-email@exemplo.com">
-                    <i data-lucide="mail" width="18" height="18"></i>
+                    <i class="fas fa-envelope"></i>
                     Contato
                 </a>
-                <a href="#" onclick="alert('PlixGames - Versão 1.0.0\nHub de jogos criado com amor para gamers!'); return false;">
-                    <i data-lucide="info" width="18" height="18"></i>
+                <a href="#" onclick="showAbout(); return false;">
+                    <i class="fas fa-info-circle"></i>
                     Sobre
+                </a>
+                <a href="#" onclick="showStats(); return false;">
+                    <i class="fas fa-chart-bar"></i>
+                    Estatísticas
                 </a>
             </div>
             <p class="footer-text">
-                © 2024 PlixGames. Feito com <i data-lucide="heart" width="16" height="16" class="heart" style="display: inline-block; vertical-align: middle;"></i> para gamers.
+                © 2024 PlixGames. Feito com <i class="fas fa-heart"></i> para gamers.
             </p>
         </div>
     </footer>
 
     <script>
-        // ========================================
-        // INICIALIZAÇÃO DOS ÍCONES LUCIDE
-        // ========================================
-        lucide.createIcons();
-
         // ========================================
         // SISTEMA DE PESQUISA
         // ========================================
@@ -573,8 +600,6 @@
             if (visibleCount === 0) {
                 noGamesMessage.style.display = 'block';
                 gamesGrid.style.display = 'none';
-                // Re-renderiza os ícones na mensagem
-                lucide.createIcons();
             } else {
                 noGamesMessage.style.display = 'none';
                 gamesGrid.style.display = 'grid';
@@ -635,25 +660,74 @@
         });
 
         // ========================================
+        // FUNÇÕES ADICIONAIS
+        // ========================================
+        
+        // Função para mostrar informações sobre o site
+        function showAbout() {
+            alert(`PlixGames - Versão 1.0.0\n\n🎮 Hub de jogos criado com amor para gamers!\n\n✨ Recursos:\n• Interface moderna e responsiva\n• Pesquisa em tempo real\n• Animações suaves\n• Fácil adição de novos jogos\n\nPowered by Font Awesome Icons`);
+        }
+
+        // Função para mostrar estatísticas
+        function showStats() {
+            const totalGames = gameCards.length;
+            const categories = {
+                'Exploração': 2,
+                'Ação': 1
+            };
+            
+            let statsMessage = `📊 Estatísticas do PlixGames\n\n`;
+            statsMessage += `🎮 Total de Jogos: ${totalGames}\n\n`;
+            statsMessage += `📂 Categorias:\n`;
+            for (const [cat, count] of Object.entries(categories)) {
+                statsMessage += `• ${cat}: ${count} jogo(s)\n`;
+            }
+            
+            alert(statsMessage);
+        }
+
+        // ========================================
         // CONSOLE EASTER EGG
         // ========================================
         console.log('%c🎮 PlixGames - Hub de Jogos 🎮', 
-            'color: #6366f1; font-size: 20px; font-weight: bold;');
+            'color: #6366f1; font-size: 20px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);');
         console.log('%cDivirta-se explorando os jogos!', 
             'color: #a0a0a0; font-size: 14px;');
-        console.log('%cPowered by Lucide Icons', 
-            'color: #818cf8; font-size: 12px;');
+        console.log('%c⚡ Powered by Font Awesome 6.7.2', 
+            'color: #818cf8; font-size: 12px; font-style: italic;');
+        
+        // ASCII Art no console
+        console.log(`%c
+    ____  _ _     ______                         
+   / __ \\/ (_)_ _/ ____/____ _____ ___  ___  _____
+  / /_/ / / /| |/_/ / __/ __ \`/ __ \`__ \\/ _ \\/ ___/
+ / ____/ / / _>  </ /_/ / /_/ / / / / / /  __(__  ) 
+/_/   /_/_/_/_/|_|\\____/\\__,_/_/ /_/ /_/\\___/____/  
+        `, 'color: #6366f1; font-size: 10px;');
 
         // ========================================
-        // RE-RENDERIZA ÍCONES APÓS MUDANÇAS NO DOM
+        // TECLAS DE ATALHO
         // ========================================
-        const mutationObserver = new MutationObserver(() => {
-            lucide.createIcons();
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + K para focar na pesquisa
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                searchBox.focus();
+                searchBox.select();
+            }
+            
+            // Escape para limpar pesquisa
+            if (e.key === 'Escape' && searchBox.value) {
+                searchBox.value = '';
+                filterGames();
+            }
         });
 
-        mutationObserver.observe(document.body, {
-            childList: true,
-            subtree: true
+        // ========================================
+        // INICIALIZAÇÃO
+        // ========================================
+        window.addEventListener('load', function() {
+            console.log('✅ PlixGames carregado com sucesso!');
         });
     </script>
 </body>
