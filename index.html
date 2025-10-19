@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlixGames - Hub de Jogos</title>
+    <title>PlixGames</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <style>
@@ -202,6 +202,12 @@
             overflow: hidden;
         }
 
+        .game-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .game-image i {
             font-size: 64px;
             color: white;
@@ -281,6 +287,122 @@
             transform: translateX(5px);
         }
 
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 25px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            color: white;
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+            color: var(--text-primary);
+        }
+
+        .modal-body h3 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .modal-body p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .modal-body ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-body li {
+            padding: 8px 0;
+            color: var(--text-secondary);
+        }
+
+        .modal-body li::before {
+            content: "• ";
+            color: var(--accent);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
         /* Rodapé */
         footer {
             background: var(--bg-secondary);
@@ -305,6 +427,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            cursor: pointer;
         }
 
         .footer-links a:hover {
@@ -483,7 +606,7 @@
             <!-- Maze Explorer 2 -->
             <div class="game-card" data-name="maze explorer 2">
                 <div class="game-image">
-                    <i class="fas fa-map-marked-alt"></i>
+                    <img src="assets/Labirinto 2D.png" alt="Maze Explorer 2" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-maze\'></i>';">
                 </div>
                 <div class="game-info">
                     <h2 class="game-title">Maze Explorer 2</h2>
@@ -497,7 +620,7 @@
             <!-- Maze Explorer 3 -->
             <div class="game-card" data-name="maze explorer 3">
                 <div class="game-image">
-                    <i class="fas fa-compass"></i>
+                    <img src="assets/Maze3D.png" alt="Maze Explorer 3" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-cube\'></i>';">
                 </div>
                 <div class="game-info">
                     <h2 class="game-title">Maze Explorer 3</h2>
@@ -511,7 +634,7 @@
             <!-- Bang Bang -->
             <div class="game-card" data-name="bang bang">
                 <div class="game-image">
-                    <i class="fas fa-crosshairs"></i>
+                    <img src="assets/bang-bang.png" alt="Bang Bang" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-crosshairs\'></i>';">
                 </div>
                 <div class="game-info">
                     <h2 class="game-title">Bang Bang</h2>
@@ -533,6 +656,21 @@
         <div class="no-games" id="noGamesMessage" style="display: none;">
             <i class="fas fa-search-minus"></i>
             Nenhum jogo encontrado. Tente outro termo de pesquisa.
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Título do Modal</h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Conteúdo dinâmico será inserido aqui -->
+            </div>
         </div>
     </div>
 
@@ -564,6 +702,40 @@
     </footer>
 
     <script>
+        // ========================================
+        // SISTEMA DE MODAL
+        // ========================================
+        
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+
+        function openModal(title, content) {
+            modalTitle.textContent = title;
+            modalBody.innerHTML = content;
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Fechar modal ao clicar fora
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+
+        // Fechar modal com ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
         // ========================================
         // SISTEMA DE PESQUISA
         // ========================================
@@ -660,12 +832,26 @@
         });
 
         // ========================================
-        // FUNÇÕES ADICIONAIS
+        // FUNÇÕES ADICIONAIS (AGORA COM MODAIS)
         // ========================================
         
         // Função para mostrar informações sobre o site
         function showAbout() {
-            alert(`PlixGames - Versão 1.0.0\n\n🎮 Hub de jogos criado com amor para gamers!\n\n✨ Recursos:\n• Interface moderna e responsiva\n• Pesquisa em tempo real\n• Animações suaves\n• Fácil adição de novos jogos\n\nPowered by Font Awesome Icons`);
+            const content = `
+                <h3>🎮 PlixGames - Versão 1.0.0</h3>
+                <p>Hub de jogos criado com amor para gamers!</p>
+                
+                <h3>✨ Recursos:</h3>
+                <ul>
+                    <li>Interface moderna e responsiva</li>
+                    <li>Pesquisa em tempo real</li>
+                    <li>Animações suaves</li>
+                    <li>Fácil adição de novos jogos</li>
+                </ul>
+                
+                <p><strong>Powered by Font Awesome Icons</strong></p>
+            `;
+            openModal('Sobre o PlixGames', content);
         }
 
         // Função para mostrar estatísticas
@@ -676,14 +862,21 @@
                 'Ação': 1
             };
             
-            let statsMessage = `📊 Estatísticas do PlixGames\n\n`;
-            statsMessage += `🎮 Total de Jogos: ${totalGames}\n\n`;
-            statsMessage += `📂 Categorias:\n`;
+            let statsHTML = `
+                <h3>📊 Estatísticas do PlixGames</h3>
+                <p><strong>🎮 Total de Jogos:</strong> ${totalGames}</p>
+                
+                <h3>📂 Categorias:</h3>
+                <ul>
+            `;
+            
             for (const [cat, count] of Object.entries(categories)) {
-                statsMessage += `• ${cat}: ${count} jogo(s)\n`;
+                statsHTML += `<li>${cat}: ${count} jogo(s)</li>`;
             }
             
-            alert(statsMessage);
+            statsHTML += '</ul>';
+            
+            openModal('Estatísticas', statsHTML);
         }
 
         // ========================================
@@ -728,7 +921,33 @@
         // ========================================
         window.addEventListener('load', function() {
             console.log('✅ PlixGames carregado com sucesso!');
+            
+            // Tenta carregar imagens reais, se falhar mantém os ícones
+            const gameImages = {
+                'maze explorer 2': 'assets/Labirinto2D.png',
+                'maze explorer 3': 'assets/Maze3D.png',
+                'bang bang': 'assets/bang-bang.png'
+            };
+            
+            gameCards.forEach(card => {
+                const gameName = card.dataset.name;
+                const imageContainer = card.querySelector('.game-image');
+                
+                if (gameImages[gameName]) {
+                    const img = new Image();
+                    img.src = gameImages[gameName];
+                    img.alt = card.querySelector('.game-title').textContent;
+                    
+                    img.onload = function() {
+                        // Remove o ícone e adiciona a imagem
+                        imageContainer.innerHTML = '';
+                        imageContainer.appendChild(img);
+                    };
+                    
+                    img.onerror = function() {
+                        // Mantém o ícone se a imagem falhar
+                        console.log(`Imagem não encontrada para ${gameName}, mantendo ícone`);
+                    };
+                }
+            });
         });
-    </script>
-</body>
-</html>
