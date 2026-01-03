@@ -1,100 +1,95 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlixGames</title>
-
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
-
     <style>
-        /* Estilos customizados para complementar o Tailwind */
         :root {
             --accent: #6366f1;
             --accent-hover: #818cf8;
         }
-
         .gradient-text {
             background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
         .gradient-bg {
             background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
         }
-
         .text-shadow-glow {
             text-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
         }
-
-        /* Efeito de bounce customizado */
         @keyframes bounceIn {
-            0% {
-                opacity: 0;
-                transform: translateY(100px) scale(0.8);
-            }
-
-            50% {
-                opacity: 1;
-                transform: translateY(-20px) scale(1.05);
-            }
-
-            70% {
-                transform: translateY(10px) scale(0.98);
-            }
-
-            85% {
-                transform: translateY(-5px) scale(1.01);
-            }
-
-            100% {
-                transform: translateY(0) scale(1);
-            }
+            0% { opacity: 0; transform: translateY(50px) scale(0.9); }
+            50% { opacity: 1; transform: translateY(-10px) scale(1.03); }
+            70% { transform: translateY(5px) scale(0.99); }
+            85% { transform: translateY(-2px) scale(1.01); }
+            100% { transform: translateY(0) scale(1); }
         }
-
         .bounce-in {
-            animation: bounceIn 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+        .game-card {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
-
 <body class="bg-gradient-to-br from-gray-900 via-gray-900 to-indigo-950 text-white min-h-screen font-sans antialiased">
 
-    <!-- Cabeçalho -->
-    <header class="relative overflow-hidden py-16 px-4 text-center">
+    <!-- Header/Navbar -->
+    <nav class="fixed top-0 w-full bg-gray-900/80 backdrop-blur-lg border-b border-gray-800/50 z-50">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-gamepad text-2xl gradient-text"></i>
+                <span class="text-xl font-bold">PlixGames</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#games" class="hover:text-indigo-400 transition"><i class="fas fa-home mr-2"></i>Início</a>
+                <a href="#" onclick="showAbout(); return false;" class="hover:text-indigo-400 transition"><i class="fas fa-info-circle mr-2"></i>Sobre</a>
+                <a href="#" onclick="showStats(); return false;" class="hover:text-indigo-400 transition"><i class="fas fa-chart-bar mr-2"></i>Stats</a>
+            </div>
+            <button id="menuBtn" class="md:hidden text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-gray-900/95 backdrop-blur-lg border-t border-gray-800/50">
+            <div class="container mx-auto px-4 py-4 space-y-3">
+                <a href="#games" class="block hover:text-indigo-400 transition"><i class="fas fa-home mr-2"></i>Início</a>
+                <a href="#" onclick="showAbout(); return false;" class="block hover:text-indigo-400 transition"><i class="fas fa-info-circle mr-2"></i>Sobre</a>
+                <a href="#" onclick="showStats(); return false;" class="block hover:text-indigo-400 transition"><i class="fas fa-chart-bar mr-2"></i>Stats</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative overflow-hidden py-12 px-4 text-center mt-16">
         <div class="absolute inset-0 bg-gradient-to-b from-indigo-500/10 via-transparent to-transparent"></div>
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
             <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl"></div>
             <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
         </div>
-
         <div class="container mx-auto relative z-10">
-            <div class="flex flex-col items-center justify-center space-y-4 mb-6" id="logo-container">
-                <i class="fas fa-gamepad text-5xl md:text-6xl gradient-text text-shadow-glow mb-2" id="logo-icon"></i>
-                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold gradient-text" id="main-title">PlixGames</h1>
+            <div class="flex flex-col items-center justify-center space-y-2 mb-4" id="logo-container">
+                <i class="fas fa-gamepad text-4xl md:text-5xl gradient-text text-shadow-glow mb-1" id="logo-icon"></i>
+                <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold gradient-text" id="main-title">PlixGames</h1>
             </div>
-            <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto" id="description">
+            <p class="text-base md:text-lg text-gray-300 max-w-2xl mx-auto" id="description">
                 Aqui estão todos os meus jogos em um só lugar. Explore e divirta-se!
             </p>
         </div>
     </header>
 
-    <!-- Container principal -->
-    <div class="container mx-auto px-4 py-8">
-        <!-- Barra de pesquisa -->
-        <div class="max-w-xl mx-auto mb-12 relative" id="search-container">
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 py-4" id="games">
+        <!-- Search Bar -->
+        <div class="max-w-xl mx-auto mb-8 relative" id="search-container">
             <div class="relative">
                 <input type="text" id="searchBox"
                     class="w-full p-4 pl-6 pr-12 bg-gray-800/50 backdrop-blur-lg border border-gray-700 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300"
@@ -103,113 +98,10 @@
             </div>
         </div>
 
-        <!-- Grid de jogos -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12" id="gamesGrid">
-            <!-- Maze Explorer 2 -->
-            <div class="game-card group relative opacity-0" data-name="maze explorer 2">
-                <div
-                    class="game-image relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 aspect-[16/9] flex items-center justify-center">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                    <img src="assets/Labirinto 2D.png" alt="Maze Explorer 2" class="w-full h-full object-cover"
-                        onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-maze text-6xl text-white\'></i>';">
-                    <i class="fas fa-maze text-6xl text-white absolute opacity-30"></i>
-                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                        <div class="flex items-center space-x-2">
-                            <span class="text-xs bg-indigo-600 px-2 py-1 rounded-full">2D</span>
-                            <span class="text-xs bg-gray-800 px-2 py-1 rounded-full">Aventura</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h2 class="text-xl font-bold mb-4">Maze Explorer 2</h2>
-                    <p class="text-gray-300 mb-6 text-sm">Explore labirintos desafiadores em 2D e encontre a saída!</p>
-                    <a href="https://chris-redfield.github.io/maze-explorer2/" target="_blank"
-                        class="play-button inline-flex items-center justify-center space-x-2 gradient-bg text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/30">
-                        <span>Jogar Agora</span>
-                        <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
-                    </a>
-                </div>
-            </div>
+        <!-- Games Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12" id="gamesGrid"></div>
 
-            <!-- Maze Explorer 3 -->
-            <div class="game-card group relative opacity-0" data-name="maze explorer 3">
-                <div
-                    class="game-image relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 aspect-[16/9] flex items-center justify-center">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                    <img src="assets/Maze3D.png" alt="Maze Explorer 3" class="w-full h-full object-cover"
-                        onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-cube text-6xl text-white\'></i>';">
-                    <i class="fas fa-cube text-6xl text-white absolute opacity-30"></i>
-                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                        <div class="flex items-center space-x-2">
-                            <span class="text-xs bg-blue-600 px-2 py-1 rounded-full">3D</span>
-                            <span class="text-xs bg-gray-800 px-2 py-1 rounded-full">Aventura</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h2 class="text-xl font-bold mb-4">Maze Explorer 3</h2>
-                    <p class="text-gray-300 mb-6 text-sm">Navegue por labirintos em 3D com uma perspectiva totalmente
-                        nova.</p>
-                    <a href="https://chris-redfield.github.io/maze-explorer3" target="_blank"
-                        class="play-button inline-flex items-center justify-center space-x-2 gradient-bg text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/30">
-                        <span>Jogar Agora</span>
-                        <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Bang Bang -->
-            <div class="game-card group relative opacity-0" data-name="bang bang">
-                <div
-                    class="game-image relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 aspect-[16/9] flex items-center justify-center">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                    <img src="assets/bang-bang.png" alt="Bang Bang" class="w-full h-full object-cover"
-                        onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-crosshairs text-6xl text-white\'></i>';">
-                    <i class="fas fa-crosshairs text-6xl text-white absolute opacity-30"></i>
-                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                        <div class="flex items-center space-x-2">
-                            <span class="text-xs bg-red-600 px-2 py-1 rounded-full">Ação</span>
-                            <span class="text-xs bg-gray-800 px-2 py-1 rounded-full">Tiro</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h2 class="text-xl font-bold mb-4">Bang Bang</h2>
-                    <p class="text-gray-300 mb-6 text-sm">Jogo de tiro rápido com muita ação e adrenalina!</p>
-                    <a href="https://chris-redfield.github.io/bang-bang/" target="_blank"
-                        class="play-button inline-flex items-center justify-center space-x-2 gradient-bg text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/30">
-                        <span>Jogar Agora</span>
-                        <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="game-card group relative opacity-0" data-name="pool sinuca bilhar">
-                <div
-                    class="game-image relative overflow-hidden rounded-2xl bg-gradient-to-br from-green-600 to-emerald-600 aspect-[16/9] flex items-center justify-center">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                    <img src="assets/pool.png" alt="Pool" class="w-full h-full object-cover"
-                        onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-circle text-6xl text-white\'></i>';">
-                    <i class="fas fa-circle text-6xl text-white absolute opacity-30"></i>
-                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                        <div class="flex items-center space-x-2">
-                            <span class="text-xs bg-green-600 px-2 py-1 rounded-full">Esporte</span>
-                            <span class="text-xs bg-gray-800 px-2 py-1 rounded-full">Física</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h2 class="text-xl font-bold mb-4">Pool</h2>
-                    <p class="text-gray-300 mb-6 text-sm">Jogo de sinuca realista com física precisa e controles intuitivos!</p>
-                    <a href="https://chris-redfield.github.io/pool/" target="_blank"
-                        class="play-button inline-flex items-center justify-center space-x-2 gradient-bg text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/30">
-                        <span>Jogar Agora</span>
-                        <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mensagem quando não há jogos encontrados -->
+        <!-- No Games Message -->
         <div id="noGamesMessage" class="hidden text-center py-16">
             <div class="max-w-md mx-auto">
                 <i class="fas fa-search-minus text-7xl text-gray-600 mb-6"></i>
@@ -220,14 +112,11 @@
     </div>
 
     <!-- Modal -->
-    <div id="modalOverlay"
-        class="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-        <div
-            class="modal-container bg-gradient-to-b from-gray-900 to-gray-900 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden border border-gray-800">
+    <div id="modalOverlay" class="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="modal-container bg-gradient-to-b from-gray-900 to-gray-900 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden border border-gray-800">
             <div class="gradient-bg p-6 relative">
                 <h2 id="modalTitle" class="text-2xl font-bold text-white"></h2>
-                <button onclick="closeModal()"
-                    class="absolute right-4 top-4 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200">
+                <button onclick="closeModal()" class="absolute right-4 top-4 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200">
                     <i class="fas fa-times text-white"></i>
                 </button>
             </div>
@@ -235,461 +124,317 @@
         </div>
     </div>
 
-    <!-- Rodapé Novo -->
+    <!-- Footer -->
     <footer class="bg-gradient-to-t from-gray-900 via-gray-900 to-transparent border-t border-gray-800/50 mt-20 py-14">
         <div class="container mx-auto px-6">
-
-            <!-- GRID PRINCIPAL -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-
-                <!-- COLUNA 1: LOGO / DESCRIÇÃO -->
                 <div>
                     <div class="flex items-center space-x-3 mb-3">
                         <i class="fas fa-gamepad text-indigo-500 text-xl"></i>
                         <h2 class="text-xl font-bold">PlixGames</h2>
                     </div>
-
                     <p class="text-gray-400 text-sm leading-relaxed">
                         Uma biblioteca de jogos criada com dedicação, criatividade e muita paixão por desenvolvimento.
                     </p>
-
-                    <p class="text-gray-500 text-xs mt-3">
-                        © 2024 PlixGames. Todos os direitos reservados.
-                    </p>
+                    <p class="text-gray-500 text-xs mt-3">© 2024 PlixGames. Todos os direitos reservados.</p>
                 </div>
-
-                <!-- COLUNA 2: LINKS -->
                 <div class="text-center md:text-left">
                     <h3 class="font-semibold text-lg mb-4 text-indigo-400">Navegação</h3>
-
                     <ul class="space-y-3 text-gray-300">
-                        <li>
-                            <a href="mailto:seu-email@exemplo.com" class="hover:text-indigo-400 transition">
-                                <i class="fas fa-envelope mr-2"></i> Contato
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" onclick="showAbout(); return false;" class="hover:text-indigo-400 transition">
-                                <i class="fas fa-info-circle mr-2"></i> Sobre
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" onclick="showStats(); return false;" class="hover:text-indigo-400 transition">
-                                <i class="fas fa-chart-bar mr-2"></i> Estatísticas
-                            </a>
-                        </li>
+                        <li><a href="mailto:seu-email@exemplo.com" class="hover:text-indigo-400 transition"><i class="fas fa-envelope mr-2"></i>Contato</a></li>
+                        <li><a href="#" onclick="showAbout(); return false;" class="hover:text-indigo-400 transition"><i class="fas fa-info-circle mr-2"></i>Sobre</a></li>
+                        <li><a href="#" onclick="showStats(); return false;" class="hover:text-indigo-400 transition"><i class="fas fa-chart-bar mr-2"></i>Estatísticas</a></li>
                     </ul>
                 </div>
-
-                <!-- COLUNA 3: EQUIPE -->
                 <div class="text-center md:text-left">
                     <h3 class="font-semibold text-lg mb-4 text-indigo-400">Equipe do Projeto</h3>
-
                     <ul class="space-y-4 text-gray-300">
-
-                        <!-- CHRISTIAN -->
                         <li class="flex items-center space-x-3">
                             <i class="fas fa-user-astronaut text-indigo-400 text-lg"></i>
                             <div class="flex flex-col">
-                                <a href="https://www.linkedin.com/in/christianmoryah/" target="_blank"
-                                    class="hover:text-indigo-400 transition font-medium">
-                                    Christian Moryah
-                                </a>
-                                <a href="https://github.com/chris-redfield" target="_blank"
-                                    class="text-gray-400 text-sm hover:text-indigo-300 transition">
-                                    <i class="fab fa-github mr-1"></i> GitHub do Chris
+                                <a href="https://www.linkedin.com/in/christianmoryah/" target="_blank" class="hover:text-indigo-400 transition font-medium">Christian Moryah</a>
+                                <a href="https://github.com/chris-redfield" target="_blank" class="text-gray-400 text-sm hover:text-indigo-300 transition">
+                                    <i class="fab fa-github mr-1"></i>GitHub do Chris
                                 </a>
                             </div>
                         </li>
-
-                        <!-- LUCAS -->
                         <li class="flex items-center space-x-3">
                             <i class="fas fa-user-ninja text-indigo-400 text-lg"></i>
                             <div class="flex flex-col">
-                                <a href="https://www.linkedin.com/in/lucas-andrade-5511022b3/" target="_blank"
-                                    class="hover:text-indigo-400 transition font-medium">
-                                    Lucas Andrade
-                                </a>
-                                <a href="https://github.com/lucas19fonseca" target="_blank"
-                                    class="text-gray-400 text-sm hover:text-indigo-300 transition">
-                                    <i class="fab fa-github mr-1"></i> GitHub do Lucas
+                                <a href="https://www.linkedin.com/in/lucas-andrade-5511022b3/" target="_blank" class="hover:text-indigo-400 transition font-medium">Lucas Andrade</a>
+                                <a href="https://github.com/lucas19fonseca" target="_blank" class="text-gray-400 text-sm hover:text-indigo-300 transition">
+                                    <i class="fab fa-github mr-1"></i>GitHub do Lucas
                                 </a>
                             </div>
                         </li>
-
                     </ul>
                 </div>
-
             </div>
         </div>
     </footer>
 
-
-
-
     <script>
-        // ========================================
-        // INICIALIZAÇÃO GSAP E ANIMAÇÕES
-        // ========================================
+        // ===== DADOS DOS JOGOS =====
+        const GAMES = [
+            {
+                name: 'Maze Explorer 2',
+                keywords: 'maze explorer 2',
+                image: 'assets/Labirinto 2D.png',
+                icon: 'fa-maze',
+                gradient: 'from-indigo-600 to-purple-600',
+                tags: [
+                    { text: '2D', color: 'bg-indigo-600' },
+                    { text: 'Aventura', color: 'bg-gray-800' }
+                ],
+                description: 'Explore labirintos desafiadores em 2D e encontre a saída!',
+                url: 'https://chris-redfield.github.io/maze-explorer2/'
+            },
+            {
+                name: 'Maze Explorer 3',
+                keywords: 'maze explorer 3',
+                image: 'assets/Maze3D.png',
+                icon: 'fa-cube',
+                gradient: 'from-indigo-600 to-purple-600',
+                tags: [
+                    { text: '3D', color: 'bg-blue-600' },
+                    { text: 'Aventura', color: 'bg-gray-800' }
+                ],
+                description: 'Navegue por labirintos em 3D com uma perspectiva totalmente nova.',
+                url: 'https://chris-redfield.github.io/maze-explorer3'
+            },
+            {
+                name: 'Bang Bang',
+                keywords: 'bang bang',
+                image: 'assets/bang-bang.png',
+                icon: 'fa-crosshairs',
+                gradient: 'from-indigo-600 to-purple-600',
+                tags: [
+                    { text: 'Ação', color: 'bg-red-600' },
+                    { text: 'Tiro', color: 'bg-gray-800' }
+                ],
+                description: 'Jogo de tiro rápido com muita ação e adrenalina!',
+                url: 'https://chris-redfield.github.io/bang-bang/'
+            },
+            {
+                name: 'Pool',
+                keywords: 'pool sinuca bilhar',
+                image: 'assets/sinuca.png',
+                icon: 'fa-circle',
+                gradient: 'from-green-600 to-emerald-600',
+                tags: [
+                    { text: 'Esporte', color: 'bg-green-600' },
+                    { text: 'Física', color: 'bg-gray-800' }
+                ],
+                description: 'Jogo de sinuca realista com física precisa e controles intuitivos!',
+                url: 'https://chris-redfield.github.io/pool/'
+            },
+            {
+                name: 'Nightdrift',
+                keywords: 'nightdrift foguete rocket flapbird flappy',
+                image: 'assets/foguete.png',
+                icon: 'fa-rocket',
+                gradient: 'from-purple-600 to-pink-600',
+                tags: [
+                    { text: 'Arcade', color: 'bg-purple-600' },
+                    { text: 'Habilidade', color: 'bg-gray-800' }
+                ],
+                description: 'Pilote um foguete através da noite em um desafio estilo Flappy Bird!',
+                url: 'https://lucas19fonseca.github.io/Nightdrift/'
+            },
+            {
+                name: 'Ants',
+                keywords: 'ants formigas insetos simulação',
+                image: 'assets/ant.png',
+                icon: 'fa-bug',
+                gradient: 'from-amber-600 to-orange-600',
+                tags: [
+                    { text: 'Simulação', color: 'bg-amber-600' },
+                    { text: 'Estratégia', color: 'bg-gray-800' }
+                ],
+                description: 'Gerencie uma colônia de formigas e observe seu comportamento!',
+                url: 'https://chris-redfield.github.io/ants/'
+            },
+            {
+                name: 'Tiny Village Survive',
+                keywords: 'tiny village survive sobrevivência vila aldeã estratégia',
+                image: 'assets/village.png',
+                icon: 'fa-house-flag',
+                gradient: 'from-emerald-600 to-teal-600',
+                tags: [
+                    { text: 'Sobrevivência', color: 'bg-emerald-600' },
+                    { text: 'Estratégia', color: 'bg-gray-800' }
+                ],
+                description: 'Construa e gerencie sua vila para sobreviver aos desafios!',
+                url: 'https://chris-redfield.github.io/tiny-village-survive/'
+            }
+        ];
 
+        // ===== RENDERIZAR JOGOS =====
+        function renderGames() {
+            const gamesGrid = document.getElementById('gamesGrid');
+            gamesGrid.innerHTML = GAMES.map(game => `
+                <div class="game-card group relative opacity-0" data-name="${game.keywords}">
+                    <div class="game-image relative overflow-hidden rounded-2xl bg-gradient-to-br ${game.gradient} aspect-[16/9] flex items-center justify-center">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <img src="${game.image}" alt="${game.name}" class="w-full h-full object-cover"
+                            onerror="this.style.display='none';">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                            <div class="flex items-center space-x-2">
+                                ${game.tags.map(tag => `<span class="text-xs ${tag.color} px-2 py-1 rounded-full">${tag.text}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold mb-4">${game.name}</h2>
+                        <p class="text-gray-300 mb-6 text-sm">${game.description}</p>
+                        <a href="${game.url}" target="_blank"
+                            class="play-button inline-flex items-center justify-center space-x-2 gradient-bg text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/30">
+                            <span>Jogar Agora</span>
+                            <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function () {
-            // Configurar GSAP com ScrollTrigger
+            renderGames();
             gsap.registerPlugin(ScrollTrigger);
 
-            // Animação de entrada do cabeçalho
-            gsap.from("#logo-container", {
-                duration: 1.2,
-                y: 50,
-                opacity: 0,
-                ease: "power3.out"
-            });
-
-            gsap.from("#main-title", {
-                duration: 1.5,
-                scale: 0.8,
-                opacity: 0,
-                ease: "back.out(1.7)",
-                delay: 0.2
-            });
-
-            // Animação de digitação no subtítulo
+            // Animações
+            gsap.from("#logo-container", { duration: 0.8, y: 30, opacity: 0, ease: "power3.out" });
+            gsap.from("#main-title", { duration: 1, scale: 0.9, opacity: 0, ease: "back.out(1.4)", delay: 0.1 });
+            
             const description = document.getElementById('description');
             const originalText = description.textContent;
             description.textContent = '';
+            gsap.to(description, { duration: 1.5, text: originalText, ease: "power2.inOut", delay: 0.5 });
+            
+            gsap.from("#search-container", { duration: 0.6, y: 20, opacity: 0, ease: "power3.out", delay: 0.8 });
 
-            gsap.to(description, {
-                duration: 2,
-                text: originalText,
-                ease: "power2.inOut",
-                delay: 0.8
-            });
-
-            // Animação de entrada da barra de pesquisa
-            gsap.from("#search-container", {
-                duration: 1,
-                y: 30,
-                opacity: 0,
-                ease: "power3.out",
-                delay: 1.2
-            });
-
-            // ANIMAÇÃO DE BOUNCE PARA OS CARDS (UMA VEZ SÓ)
-            const gameCards = document.querySelectorAll('.game-card');
-
-            // Usando GSAP para animação de bounce controlada
-            gameCards.forEach((card, index) => {
-                // Inicialmente escondido
-                gsap.set(card, {
-                    opacity: 0,
-                    y: 100,
-                    scale: 0.8
-                });
-
-                // Animação de bounce ao entrar na viewport
+            // Animação dos cards
+            document.querySelectorAll('.game-card').forEach((card, index) => {
+                gsap.set(card, { opacity: 0, y: 50, scale: 0.9 });
                 ScrollTrigger.create({
                     trigger: card,
-                    start: "top 90%",
-                    once: true, // Executa apenas uma vez
+                    start: "top 95%",
+                    once: true,
                     onEnter: () => {
-                        // Animação de bounce com GSAP
                         gsap.to(card, {
-                            duration: 1.2,
+                            duration: 0.6,
                             opacity: 1,
                             y: 0,
                             scale: 1,
-                            ease: "elastic.out(1, 0.5)",
-                            delay: index * 0.15, // Delay escalonado
-                            onStart: () => {
-                                // Adiciona classe para a animação CSS como fallback
-                                card.classList.add('bounce-in');
-                            },
-                            onComplete: () => {
-                                // Remove a classe após a animação terminar
-                                setTimeout(() => {
-                                    card.classList.remove('bounce-in');
-                                }, 1200);
-                            }
+                            ease: "back.out(1.4)",
+                            delay: index * 0.08
                         });
                     }
                 });
             });
 
-            // Animação do ícone do logo
-            gsap.to("#logo-icon", {
-                duration: 20,
-                rotation: 360,
-                repeat: -1,
-                ease: "none"
+            gsap.to("#logo-icon", { duration: 20, rotation: 360, repeat: -1, ease: "none" });
+
+            // Mobile menu
+            document.getElementById('menuBtn').addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.toggle('hidden');
             });
 
-            // Efeito de brilho interativo nos botões
-            const playButtons = document.querySelectorAll('.play-button');
-            playButtons.forEach(button => {
-                button.addEventListener('mouseenter', () => {
-                    gsap.to(button, {
-                        boxShadow: "0 10px 30px rgba(99, 102, 241, 0.5)",
-                        duration: 0.3
-                    });
+            // Card hover
+            document.querySelectorAll('.game-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, { y: -10, boxShadow: "0 25px 50px rgba(0, 0, 0, 0.5)", duration: 0.4, ease: "power2.out" });
                 });
-
-                button.addEventListener('mouseleave', () => {
-                    gsap.to(button, {
-                        boxShadow: "0 5px 15px rgba(99, 102, 241, 0.3)",
-                        duration: 0.3
-                    });
-                });
-            });
-
-            // Links do rodapé com animação
-            const footerLinks = document.querySelectorAll('.footer-link');
-            footerLinks.forEach(link => {
-                link.addEventListener('mouseenter', () => {
-                    gsap.to(link, {
-                        y: -3,
-                        color: "#6366f1",
-                        duration: 0.3
-                    });
-                });
-
-                link.addEventListener('mouseleave', () => {
-                    gsap.to(link, {
-                        y: 0,
-                        color: "",
-                        duration: 0.3
-                    });
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, { y: 0, boxShadow: "0 10px 20px rgba(0, 0, 0, 0.3)", duration: 0.4, ease: "power2.out" });
                 });
             });
         });
 
-        // ========================================
-        // SISTEMA DE MODAL
-        // ========================================
+        // ===== PESQUISA =====
+        document.getElementById('searchBox').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            let visibleCount = 0;
 
-        const modalOverlay = document.getElementById('modalOverlay');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalBody = document.getElementById('modalBody');
+            document.querySelectorAll('.game-card').forEach((card, index) => {
+                const gameName = card.dataset.name.toLowerCase();
+                if (gameName.includes(searchTerm)) {
+                    gsap.to(card, {
+                        opacity: 1, scale: 1, y: 0, duration: 0.5, delay: visibleCount * 0.08,
+                        ease: "back.out(1.3)", onStart: () => { card.style.display = 'block'; }
+                    });
+                    visibleCount++;
+                } else {
+                    gsap.to(card, {
+                        opacity: 0, scale: 0.8, y: 20, duration: 0.3, ease: "power2.in",
+                        onComplete: () => { card.style.display = 'none'; }
+                    });
+                }
+            });
 
+            const noGamesMessage = document.getElementById('noGamesMessage');
+            if (visibleCount === 0 && searchTerm !== '') {
+                document.getElementById('gamesGrid').style.display = 'none';
+                noGamesMessage.classList.remove('hidden');
+            } else {
+                document.getElementById('gamesGrid').style.display = 'grid';
+                noGamesMessage.classList.add('hidden');
+            }
+        });
+
+        // ===== MODAL =====
         function openModal(title, content) {
-            modalTitle.textContent = title;
-            modalBody.innerHTML = content;
-
-            // Reset e animação de entrada
+            const modalOverlay = document.getElementById('modalOverlay');
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalBody').innerHTML = content;
             gsap.set(modalOverlay, { opacity: 0 });
             modalOverlay.classList.remove('hidden');
             modalOverlay.classList.add('flex');
-
-            // Animação de entrada com GSAP
             const tl = gsap.timeline();
-            tl.to(modalOverlay, {
-                opacity: 1,
-                duration: 0.3,
-                ease: "power2.out"
-            })
-                .from('.modal-container', {
-                    y: 50,
-                    opacity: 0,
-                    scale: 0.9,
-                    duration: 0.5,
-                    ease: "back.out(1.2)"
-                }, "-=0.2");
-
+            tl.to(modalOverlay, { opacity: 1, duration: 0.3, ease: "power2.out" })
+              .from('.modal-container', { y: 50, opacity: 0, scale: 0.9, duration: 0.5, ease: "back.out(1.2)" }, "-=0.2");
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
-            // Animação de saída com GSAP
+            const modalOverlay = document.getElementById('modalOverlay');
             const tl = gsap.timeline();
-            tl.to('.modal-container', {
-                y: 30,
-                opacity: 0,
-                scale: 0.95,
-                duration: 0.3,
-                ease: "power2.in"
-            })
-                .to(modalOverlay, {
-                    opacity: 0,
-                    duration: 0.2,
-                    onComplete: () => {
-                        modalOverlay.classList.add('hidden');
-                        modalOverlay.classList.remove('flex');
-                        document.body.style.overflow = '';
-                    }
-                }, "-=0.1");
+            tl.to('.modal-container', { y: 30, opacity: 0, scale: 0.95, duration: 0.3, ease: "power2.in" })
+              .to(modalOverlay, {
+                  opacity: 0, duration: 0.2,
+                  onComplete: () => {
+                      modalOverlay.classList.add('hidden');
+                      modalOverlay.classList.remove('flex');
+                      document.body.style.overflow = '';
+                  }
+              }, "-=0.1");
         }
 
-        // Fechar modal ao clicar fora
-        modalOverlay.addEventListener('click', function (e) {
-            if (e.target === modalOverlay) {
-                closeModal();
-            }
+        document.getElementById('modalOverlay').addEventListener('click', function (e) {
+            if (e.target === this) closeModal();
         });
 
-        // Fechar modal com ESC
         document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && !modalOverlay.classList.contains('hidden')) {
+            if (e.key === 'Escape' && !document.getElementById('modalOverlay').classList.contains('hidden')) {
                 closeModal();
             }
         });
 
-        // ========================================
-        // SISTEMA DE PESQUISA COM ANIMAÇÃO
-        // ========================================
-
-        const searchBox = document.getElementById('searchBox');
-        const gamesGrid = document.getElementById('gamesGrid');
-        const noGamesMessage = document.getElementById('noGamesMessage');
-        const gameCards = document.querySelectorAll('.game-card');
-
-        // Animação na barra de pesquisa ao focar
-        searchBox.addEventListener('focus', function () {
-            gsap.to(this, {
-                scale: 1.02,
-                duration: 0.3,
-                ease: "power2.out"
-            });
-        });
-
-        searchBox.addEventListener('blur', function () {
-            gsap.to(this, {
-                scale: 1,
-                duration: 0.3,
-                ease: "power2.out"
-            });
-        });
-
-        // Função de pesquisa com animação
-        function filterGames() {
-            const searchTerm = searchBox.value.toLowerCase().trim();
-            let visibleCount = 0;
-
-            gameCards.forEach((card, index) => {
-                const gameName = card.dataset.name.toLowerCase();
-
-                if (gameName.includes(searchTerm)) {
-                    // Card visível - animação de entrada com bounce
-                    gsap.to(card, {
-                        opacity: 1,
-                        scale: 1,
-                        y: 0,
-                        duration: 0.8,
-                        delay: visibleCount * 0.1,
-                        ease: "elastic.out(1, 0.5)",
-                        onStart: () => {
-                            card.style.display = 'block';
-                        }
-                    });
-                    visibleCount++;
-                } else {
-                    // Card oculto - animação de saída
-                    gsap.to(card, {
-                        opacity: 0,
-                        scale: 0.8,
-                        y: 20,
-                        duration: 0.3,
-                        ease: "power2.in",
-                        onComplete: () => {
-                            card.style.display = 'none';
-                        }
-                    });
-                }
-            });
-
-            // Mostra/oculta mensagem de "nenhum jogo encontrado"
-            if (visibleCount === 0 && searchTerm !== '') {
-                gamesGrid.style.display = 'none';
-                noGamesMessage.classList.remove('hidden');
-
-                // Animação da mensagem com bounce
-                gsap.fromTo(noGamesMessage,
-                    { opacity: 0, y: 50, scale: 0.9 },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        duration: 0.8,
-                        ease: "elastic.out(1, 0.5)"
-                    }
-                );
-            } else {
-                gamesGrid.style.display = 'grid';
-                noGamesMessage.classList.add('hidden');
-            }
-        }
-
-        // Adiciona evento de digitação na barra de pesquisa
-        searchBox.addEventListener('input', filterGames);
-
-        // ========================================
-        // EFEITOS ADICIONAIS
-        // ========================================
-
-        // Efeito de clique nos cards
-        gameCards.forEach(card => {
-            card.addEventListener('click', function (e) {
-                // Se não clicou no botão, clica no botão
-                if (!e.target.classList.contains('play-button') &&
-                    !e.target.closest('.play-button')) {
-                    const button = this.querySelector('.play-button');
-                    if (button) {
-                        // Efeito de clique com bounce sutil
-                        gsap.to(this, {
-                            scale: 0.95,
-                            duration: 0.1,
-                            yoyo: true,
-                            repeat: 1
-                        });
-
-                        // Simula clique após a animação
-                        setTimeout(() => {
-                            button.click();
-                        }, 200);
-                    }
-                }
-            });
-        });
-
-        // Efeito de hover nos cards (sem flutuação contínua)
-        gameCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                gsap.to(card, {
-                    y: -10,
-                    boxShadow: "0 25px 50px rgba(0, 0, 0, 0.5)",
-                    duration: 0.4,
-                    ease: "power2.out"
-                });
-            });
-
-            card.addEventListener('mouseleave', () => {
-                gsap.to(card, {
-                    y: 0,
-                    boxShadow: "0 10px 20px rgba(0, 0, 0, 0.3)",
-                    duration: 0.4,
-                    ease: "power2.out"
-                });
-            });
-        });
-
-        // ========================================
-        // FUNÇÕES ADICIONAIS
-        // ========================================
-
-        // Função para mostrar informações sobre o site
+        // ===== FUNÇÕES DO MODAL =====
         function showAbout() {
-            const content = `
+            openModal('Sobre o PlixGames', `
                 <div class="space-y-4">
                     <div class="flex items-center space-x-3 mb-4">
                         <i class="fas fa-gamepad text-3xl gradient-text"></i>
                         <h3 class="text-xl font-bold">PlixGames - Versão 2.0</h3>
                     </div>
-                    
                     <p class="text-gray-300">Hub de jogos criado com as tecnologias mais modernas para uma experiência incrível!</p>
-                    
                     <div class="bg-gray-800/50 rounded-xl p-4 mt-6">
-                        <h4 class="font-bold text-indigo-400 mb-2">✨ Recursos Avançados:</h4>
+                        <h4 class="font-bold text-indigo-400 mb-2"><i class="fas fa-sparkles mr-2"></i>Recursos Avançados:</h4>
                         <ul class="space-y-2">
                             <li class="flex items-start">
                                 <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
-                                <span>Animações de bounce com GSAP</span>
+                                <span>Animações rápidas e suaves com GSAP</span>
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
@@ -699,144 +444,37 @@
                                 <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
                                 <span>Sistema de pesquisa em tempo real</span>
                             </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
-                                <span>Modais interativos</span>
-                            </li>
                         </ul>
                     </div>
-                    
                     <div class="pt-4 border-t border-gray-800">
                         <p class="text-sm text-gray-400"><strong>Powered by:</strong> GSAP 3.12.2, Tailwind CSS 3, Font Awesome 6.7.2</p>
                     </div>
                 </div>
-            `;
-            openModal('Sobre o PlixGames', content);
+            `);
         }
 
-        // Função para mostrar estatísticas
         function showStats() {
-            const totalGames = gameCards.length;
-
-            const content = `
+            openModal('Estatísticas', `
                 <div class="space-y-6">
-                    <h3 class="text-xl font-bold mb-4">📊 Estatísticas do PlixGames</h3>
-                    
+                    <h3 class="text-xl font-bold mb-4"><i class="fas fa-chart-line mr-2"></i>Estatísticas do PlixGames</h3>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-gradient-to-br from-indigo-900/30 to-purple-900/30 rounded-xl p-4 text-center border border-indigo-800/30">
-                            <div class="text-4xl font-bold mb-2">${totalGames}</div>
+                            <div class="text-4xl font-bold mb-2">${GAMES.length}</div>
                             <div class="text-sm text-gray-300">Total de Jogos</div>
                         </div>
-                        
                         <div class="bg-gradient-to-br from-blue-900/30 to-cyan-900/30 rounded-xl p-4 text-center border border-blue-800/30">
-                            <div class="text-4xl font-bold mb-2">3</div>
+                            <div class="text-4xl font-bold mb-2">6</div>
                             <div class="text-sm text-gray-300">Categorias</div>
                         </div>
                     </div>
-                    
-                    <div class="bg-gray-800/30 rounded-xl p-4">
-                        <h4 class="font-bold text-gray-300 mb-3">📂 Distribuição por Gênero:</h4>
-                        <div class="space-y-3">
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-sm">Aventura</span>
-                                    <span class="text-sm">2 jogos</span>
-                                </div>
-                                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
-                                    <div class="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" style="width: 66%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-sm">Ação</span>
-                                    <span class="text-sm">1 jogo</span>
-                                </div>
-                                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
-                                    <div class="h-full bg-gradient-to-r from-red-500 to-orange-500 rounded-full" style="width: 33%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <div class="text-center pt-4">
                         <p class="text-sm text-gray-400">Estatísticas atualizadas em tempo real</p>
                     </div>
                 </div>
-            `;
-            openModal('Estatísticas', content);
+            `);
         }
 
-        // ========================================
-        // EASTER EGGS E FEATURES EXTRAS
-        // ========================================
-
-        // Console easter egg
-        console.log('%c🎮 PlixGames - Animações de Bounce 🎮',
-            'color: #6366f1; font-size: 20px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);');
-        console.log('%cAnimações de bounce únicas com GSAP 3!',
-            'color: #818cf8; font-size: 14px;');
-
-        // Atalhos de teclado
-        document.addEventListener('keydown', function (e) {
-            // Ctrl/Cmd + K para focar na pesquisa
-            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                e.preventDefault();
-                searchBox.focus();
-                searchBox.select();
-
-                // Animação de bounce no campo de pesquisa
-                gsap.to(searchBox, {
-                    scale: 1.05,
-                    duration: 0.2,
-                    yoyo: true,
-                    repeat: 2,
-                    ease: "power2.inOut"
-                });
-            }
-
-            // Escape para limpar pesquisa
-            if (e.key === 'Escape' && searchBox.value) {
-                searchBox.value = '';
-                filterGames();
-            }
-        });
-
-        // Função para resetar animações de bounce (útil para debug)
-        function resetCardAnimations() {
-            gameCards.forEach(card => {
-                gsap.killTweensOf(card);
-                card.classList.remove('bounce-in');
-                card.style.opacity = '1';
-                card.style.transform = 'none';
-            });
-        }
-
-        // Expor função globalmente para debug (opcional)
-        window.resetCardAnimations = resetCardAnimations;
-
-        // Efeito de digitação ao focar na barra de pesquisa
-        searchBox.addEventListener('focus', function () {
-            const placeholder = this.getAttribute('placeholder');
-            this.setAttribute('placeholder', '');
-
-            let i = 0;
-            const typing = setInterval(() => {
-                this.setAttribute('placeholder', placeholder.substring(0, i));
-                i++;
-                if (i > placeholder.length) clearInterval(typing);
-            }, 50);
-
-            // Guarda o intervalo para limpar depois
-            this.dataset.typingInterval = typing;
-        });
-
-        searchBox.addEventListener('blur', function () {
-            if (this.dataset.typingInterval) {
-                clearInterval(parseInt(this.dataset.typingInterval));
-            }
-            this.setAttribute('placeholder', 'Pesquisar jogos...');
-        });
+        console.log('%c🎮 PlixGames - Refatorado e Otimizado 🎮', 'color: #6366f1; font-size: 20px; font-weight: bold;');
     </script>
 </body>
-
 </html>
